@@ -1,0 +1,41 @@
+{
+    "name": "Inline Full",
+    "tt_name": "module_name",
+    "namespace": "RUB\\InlineFullExternalModule",
+    "description": "A REDCap External Module that adds a fullscreen toggle to inline images/PDFs.",
+    "tt_description": "module_desc",
+    "documentation": "README.md",
+    "tt_documentation": "module_docs",
+    "authors": [
+        {
+            "name": "Günther Rezniczek",
+            "email": "guenther.rezniczek@rub.de",
+            "institution": "Ruhr-Universität Bochum"
+        }
+    ],
+    "framework-version": 11,
+    "permissions": [
+        "redcap_survey_page",
+        "redcap_data_entry_form"
+    ],
+    "system-settings": [
+    ],
+    "project-settings": [
+        {
+            "key": "debug",
+            "name": "Enable the <b>debug mode</b> (outputs tons of information to the console)",
+            "tt_name": "config_debug",
+            "type": "checkbox"
+        }
+    ],
+    "auth-ajax-actions": [
+    ],
+    "no-auth-ajax-actions": [
+    ],
+    "crons": [
+    ],
+    "compatibility": {
+        "php-version-min": "7.4.0",
+        "redcap-version-min": "12.4.0"
+     }
+}

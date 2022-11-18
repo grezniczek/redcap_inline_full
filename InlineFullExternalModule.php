@@ -39,8 +39,8 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
         $settings = $this->get_settings($project_id, $instrument, self::AT_INLINEFULL_DATAENTRY);
         if (count($settings["targets"])) {
             $settings["isSurvey"] = false;
-            $this->ih->js("js/field-shuffle-em.js", true);
-            print "<script>REDCap.EM.RUB.FieldShuffle.init(".json_encode($settings, JSON_UNESCAPED_UNICODE).");</script>";
+            $this->ih->js("js/inline-full-em.js", true);
+            print "<script>REDCap.EM.RUB.InlineFull.init(".json_encode($settings, JSON_UNESCAPED_UNICODE).");</script>";
         }
     }
 
@@ -48,8 +48,8 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
         $settings = $this->get_settings($project_id, $instrument, self::AT_INLINEFULL_SURVEY);
         if (count($settings["targets"])) {
             $settings["isSurvey"] = true;
-            $this->ih->js("js/field-shuffle-em.js", true);
-            print "<script>REDCap.EM.RUB.FieldShuffle.init(".json_encode($settings, JSON_UNESCAPED_UNICODE).");</script>";
+            $this->ih->js("js/inline-full-em.js", true);
+            print "<script>REDCap.EM.RUB.InlineFull.init(".json_encode($settings, JSON_UNESCAPED_UNICODE).");</script>";
         }
     }
 

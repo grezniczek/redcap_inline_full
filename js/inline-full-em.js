@@ -19,7 +19,7 @@ if (typeof window['REDCap']['EM'] == 'undefined') {
 if (typeof window['REDCap']['EM']['RUB'] == 'undefined') {
     window['REDCap']['EM']['RUB'] = {};
 }
-window['REDCap']['EM']['RUB']['FieldShuffle'] = {
+window['REDCap']['EM']['RUB']['InlineFull'] = {
     init: init,
 };
 
@@ -28,14 +28,14 @@ let config;
 function init(data) {
     config = data;
     log(config);
-    $(shuffleFields);
+    $(fullscreenize);
 }
 
 //#endregion
 
-//#region Field Shuffling
+//#region Fullscreen Toggle
 
-function shuffleFields() {
+function fullscreenize() {
     for (const target in config.targets) {
         const this_target = config.targets[target];
         const map = this_target.map;

@@ -36,7 +36,7 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
     #region Hooks
 
     function redcap_data_entry_form($project_id, $record = NULL, $instrument, $event_id, $group_id = NULL, $repeat_instance = 1) {
-        $settings = $this->get_settings($project_id, $instrument, self::AT_SHUFFLE_DATAENTRY);
+        $settings = $this->get_settings($project_id, $instrument, self::AT_INLINEFULL_DATAENTRY);
         if (count($settings["targets"])) {
             $settings["isSurvey"] = false;
             $this->ih->js("js/field-shuffle-em.js", true);
@@ -45,7 +45,7 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
     }
 
     function redcap_survey_page($project_id, $record = NULL, $instrument, $event_id, $group_id = NULL, $survey_hash, $response_id = NULL, $repeat_instance = 1) {
-        $settings = $this->get_settings($project_id, $instrument, self::AT_SHUFFLE_SURVEY);
+        $settings = $this->get_settings($project_id, $instrument, self::AT_INLINEFULL_SURVEY);
         if (count($settings["targets"])) {
             $settings["isSurvey"] = true;
             $this->ih->js("js/field-shuffle-em.js", true);

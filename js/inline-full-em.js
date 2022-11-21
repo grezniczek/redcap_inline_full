@@ -38,68 +38,41 @@ function init(data) {
 function fullscreenize() {
     for (const target in config.targets) {
         const this_target = config.targets[target];
-        const map = this_target.map;
         try {
-            let shuffled = this_target.shuffled.join('-');
-            let original = this_target.original.join('-');
-            log('Shuffling "' + target + '": ' + original + ' -> ' + shuffled);
-            const $target = $('input[type=text][name="' + target + '"]');
-            if ($target.length != 1) {
-                warn('Target field "' + target + '" not found.');
-                continue;
-            }
-            if ($target.val() != '') {
-                shuffled = ($target.val() ?? '').toString();
-                log('Target field "' + target + '" already has a value: ' + shuffled);
-                const shuffledItems = shuffled.split('-');
-                if (shuffledItems.length == this_target.original.length) {
-                    // Apply stored order to map
-                    for (let i = 0; i < shuffledItems.length; i++) {
-                        map[this_target.original[i]] = shuffledItems[i];
+            log('Processing "' + target + '":', this_target);
+            if (this_target.inline) {
+                const $container = $('#fileupload-container-' + target);
+                // Find viewer
+                const $viewer = $container.find('object, iframe').first();
+                if ($viewer.length < 1) continue;
+                $viewer.addClass('inline-full-viewer');
+                $viewer.css('height', '').css('max-width', '');
+                const $wrapper = $('<div class="inline-full-wrapper"></div>');
+                this_target.$controls = $('<div class="inline-fullscreen-controls"></div>').on('click', function(e) {
+                    e.preventDefault();
+                    const action = $(e.target).attr('data-inline-fullscreen-action') ?? $(e.target).parent('button').first().attr('data-inline-fullscreen-action');
+                    if (action == 'go-max') {
+                        this_target.$wrapper.addClass('inline-full-fullscreen');
+                        this_target.$controls.css('background-color', $('body').css('background-color'));
+                        $('body').addClass('inline-full-body');
                     }
-                    log('Updated map:', map);
-                }
-                else {
-                    warn('Stored order is not compatible - aborting.');
-                    continue;
-                }
+                    else if (action == 'end-max') {
+                        this_target.$wrapper.removeClass('inline-full-fullscreen');
+                        this_target.$controls.css('background-color', 'transparent');
+                        $('body').removeClass('inline-full-body');
+                    }
+                });
+                this_target.$controls.append('<button data-rc-attrs="title=global_168" title="' + window['lang'].global_168 + '" class="btn btn-light btn-xs" data-inline-fullscreen-action="go-max"><i class="fas fa-expand"></i></button>');
+                this_target.$controls.append('<button data-rc-attrs="title=global_167" title="' + window['lang'].global_167 + '" class="btn btn-light btn-xs" data-inline-fullscreen-action="end-max"><i class="fas fa-compress"></i></i></button>');
+
+                $viewer.wrap($wrapper);
+                this_target.$wrapper = $container.find('.inline-full-wrapper');
+                this_target.$wrapper.prepend(this_target.$controls);
+                
             }
             else {
-                $target.val(shuffled);
+
             }
-            const orig = {};
-            for (const fieldName of this_target.original) {
-                log('Preparing field "' + fieldName +'"');
-                const $row = $('tr[sq_id="' + fieldName + '"]');
-                const $num = $row.find('td.questionnum');
-                // Add hidden marker row before and save questionnum
-                const $mark = $('<tr></tr>');
-                $mark.attr('data-shuffle-mark', fieldName);
-                $mark.css('display','none');
-                if (config.isSurvey) {
-                    $num.before($num.clone(false));
-                    $mark.append($num);
-                }
-                $row.before($mark);
-                orig[fieldName] = {
-                    row: $row,
-                    num: $num,
-                    mark: $mark
-                }
-            }
-            log('Preparation complete:', orig);
-            for (const fieldName of this_target.original) {
-                const toField = map[fieldName];
-                log('Moving field "' + toField + '" -> ' + fieldName);
-                orig[toField].row.insertAfter(orig[fieldName].mark);
-                if (config.isSurvey) {
-                    const $num = orig[toField].row.find('td.questionnum');
-                    $num.before(orig[fieldName].num);
-                    $num.remove();
-                }
-            }
-            // Remove marker rows
-            $('[data-shuffle-mark]').remove();
         }
         catch (err) {
             error(err);

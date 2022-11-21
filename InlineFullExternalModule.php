@@ -40,6 +40,7 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
         if (count($settings["targets"])) {
             $settings["isSurvey"] = false;
             $this->ih->js("js/inline-full-em.js", true);
+            $this->ih->css("css/inline-full-em.css", true);
             print "<script>REDCap.EM.RUB.InlineFull.init(".json_encode($settings, JSON_UNESCAPED_UNICODE).");</script>";
         }
     }
@@ -49,6 +50,7 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
         if (count($settings["targets"])) {
             $settings["isSurvey"] = true;
             $this->ih->js("js/inline-full-em.js", true);
+            $this->ih->css("css/inline-full-em.css", true);
             print "<script>REDCap.EM.RUB.InlineFull.init(".json_encode($settings, JSON_UNESCAPED_UNICODE).");</script>";
         }
     }
@@ -60,28 +62,19 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
         $targets = [];
         $Proj = new \Project($pid);
         foreach ($Proj->forms[$form]["fields"] as $target => $_) {
+            $has_at = false;
+            $has_inline = false;
             $meta = $Proj->metadata[$target];
             $misc = $meta["misc"] ?? "";
             if (strpos($misc, $at_name) !== false) {
                 $result = ActionTagParser::parse($misc);
                 foreach ($result["parts"] as $at) {
-                    if ($at["text"] == $at_name && $at["param"]["type"] == "quoted-string") {
-                        $targets[$target]["original"] = array_map(function($s) { return trim($s); }, explode(",",trim($at["param"]["text"],"\"")));
-                    }
+                    $has_inline = $has_inline || $at["text"] == "@INLINE";
+                    $has_at = $has_at || $at["text"] == $at_name;
                 }
             }
-        }
-        foreach ($targets as $target => $target_data) {
-            // Generate random order
-            $sort_by = [];
-            while (count($sort_by) < count($target_data["original"])) {
-                $sort_by[] = random_int(PHP_INT_MIN, PHP_INT_MAX);
-            }
-            $sorted = array_merge($target_data["original"]);
-            array_multisort($sort_by, SORT_NUMERIC, $sorted);
-            $targets[$target]["shuffled"] = $sorted;
-            for ($i = 0; $i < count($sorted); $i++) {
-                $targets[$target]["map"][$target_data["original"][$i]] = $sorted[$i];
+            if ($has_at) {
+                $targets[$target] = [ "inline" => $has_inline ];
             }
         }
         return array(

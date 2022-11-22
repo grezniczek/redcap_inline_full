@@ -11,27 +11,56 @@
     z-index: 1031;
 }
 
-.inline-fullscreen-controls {
+.inline-full-controls {
     height: 2.5em;
     display: flex;
     align-items: center;
     justify-content: end;
 }
+.inline-full-linkwrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: .5em;
+}
+.inline-full-linkwrapper.left {
+    justify-content: flex-start;
+}
 
-.inline-full-wrapper.inline-full-fullscreen button[data-inline-fullscreen-action="go-max"] {
+button[data-inline-full-action] {
+    color: var(--primary);
+}
+button[data-inline-full-action]:focus {
+    color: var(--primary);
+    outline: 1px solid;
+}
+
+
+.inline-full-wrapper { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inline-full-wrapper.inline-full-fullscreen button[data-inline-full-action="go-max"] {
     display: none !important;
 }
-.inline-full-wrapper.inline-full-fullscreen .inline-fullscreen-controls {
+.inline-full-controls { 
+    align-self: flex-end;
+}
+
+.inline-full-wrapper.inline-full-fullscreen .inline-full-controls {
+    padding-right: 1em;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding-right: 1em;
 }
-.inline-full-wrapper:not(.inline-full-fullscreen) button[data-inline-fullscreen-action="end-max"] {
+
+.inline-full-wrapper:not(.inline-full-fullscreen) button[data-inline-full-action="end-max"] {
     display: none !important;
 }
-.inline-full-wrapper.inline-full-fullscreen .inline-full-viewer {
+
+.inline-full-wrapper.inline-full-fullscreen .inline-full-pdf {
     position: absolute;
     top: 0;
     width: 100%;
@@ -39,7 +68,22 @@
     height: calc(100% - 2.5em);
     margin-top: 2.5em;
 }
+.inline-full-wrapper.inline-full-fullscreen .inline-full-img {
+    position: absolute;
+    top: 0;
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100% - 2.5em);
+    margin-top: 2.5em;
+}
 
 .inline-full-body {
     overflow: hidden;
+}
+
+.inline-full-viewer {
+    display: none;
+}
+.inline-full-viewer.inline-full-fullscreen {
+    display: flex;
 }

@@ -74,7 +74,10 @@ class InlineFullExternalModule extends \ExternalModules\AbstractExternalModule {
                 }
             }
             if ($has_at) {
-                $targets[$target] = [ "inline" => $has_inline ];
+                $targets[$target] = [ 
+                    "inline" => $has_inline,
+                    "type" => $meta["element_type"]
+                ];
             }
         }
         return array(

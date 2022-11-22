@@ -43,7 +43,7 @@ function setup() {
         const this_target = config.targets[target];
         try {
             log('Processing "' + target + '":', this_target);
-            if (this_target.type == 'file' && this_target.inline) {
+            if (this_target.type == 'file') {
                 const $container = $('#fileupload-container-' + target);
                 // Watch for changes
                 const $input = $container.parents('td.data').find('input[name="' + target + '"]');
@@ -73,7 +73,12 @@ function setup() {
                     }
                 })
                 // Add controls
-                addWrapper($container, true);
+                if (this_target.inline) {
+                    addWrapper($container, true);
+                }
+                else {
+                    addViewer($container, target);
+                }
             }
         }
         catch (err) {
@@ -123,10 +128,11 @@ function setupPiped(source = '') {
 /**
  * 
  * @param {JQuery<HTMLElement>} $container 
+ * @param {string} fuField
  */
-function addViewer($container) {
+function addViewer($container, fuField = '') {
     const href = $container.find('a').attr('href')?.replace('file_download.php', 'image_view.php');
-    const fileName = ($container.find('a').text() ?? '').toString();
+    const fileName = (fuField == '' ? $container.find('a').text() ?? '' : $container.find('.'+fuField+'-fn').text() ?? '').toString();
     const fileExt = (fileName.split('.').pop() ?? '').toLowerCase();
     const $viewer = $('<div class="inline-full-wrapper inline-full-viewer"></div>');
     const $controls = $('<div class="inline-full-controls"></div>');
@@ -149,7 +155,11 @@ function addViewer($container) {
         $('body').removeClass('inline-full-body');
     });
     $controls.append($btnEndMax);
-    $container.find('a').wrap('<div class="inline-full-linkwrapper left"></div>');
+    const $wrapper = $('<div class="inline-full-linkwrapper"></div>');
+    if (fuField == '') {
+        $wrapper.addClass('left');
+    }
+    $container.find(fuField == '' ? 'a' : 'a.filedownloadlink').wrap($wrapper);
     $container.find('.inline-full-linkwrapper').append($btnGoMax);
     $viewer.append($controls);
 

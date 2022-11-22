@@ -87,3 +87,7 @@ button[data-inline-full-action]:focus {
 .inline-full-viewer.inline-full-fullscreen {
     display: flex;
 }
+
+.filedownloadlink + button[data-inline-full-action] {
+    margin: 0 !important;
+}

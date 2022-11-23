@@ -37,6 +37,7 @@ Supported file types are:
 - Bitmap file (.bmp)
 - Graphics Interchange Format (.gif)
 - Joint Photographic Expert Group image (.jpg, .jpeg, .jfif, .pjpeg, .pjp)
+- Portable Document Format (.pdf)
 - Portable Network Graphics (.png)
 - Scalable Vector Graphics (.svg)
 - Tagged Image File Format (.tif, .tiff)

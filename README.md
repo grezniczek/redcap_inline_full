@@ -47,4 +47,5 @@ Supported file types are:
 
 Version | Comment
 ------- | -------------
+1.0.1   | Bugfix: Viewing a file upload field would not work when the @INLINE action tag was not also present.
 1.0.0   | Initial release.

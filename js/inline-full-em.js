@@ -132,7 +132,7 @@ function setupPiped(source = '') {
  */
 function addViewer($container, fuField = '') {
     const href = $container.find('a').attr('href')?.replace('file_download.php', 'image_view.php');
-    const fileName = (fuField == '' ? $container.find('a').text() ?? '' : $container.find('.'+fuField+'-fn').text() ?? '').toString();
+    const fileName = (fuField == '' ? $container.find('a').text() ?? '' : $container.find('.fu-fn').text() ?? '').toString();
     const fileExt = (fileName.split('.').pop() ?? '').toLowerCase();
     const $viewer = $('<div class="inline-full-wrapper inline-full-viewer"></div>');
     const $controls = $('<div class="inline-full-controls"></div>');

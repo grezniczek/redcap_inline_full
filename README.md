@@ -27,9 +27,9 @@ The module's actions are controlled by **Action Tags**:
 
 There are no parameters that can or should be set for these action tags.
 
-Valid target fields are file upload fields and any fields that have file upload fields piped into them (with the `:inline` or `:link` modifiers.
+Valid target fields are file upload fields and any fields that have file upload fields piped into them (with the `:inline` or `:link` modifiers, as well as descriptive fields that are showing an attachment link with a supported file type.
 
-When applied to file upload fields, a button will be added next to the file name that will trigger a full screen view of the image/PDF. This effect does not depend on whether the `@INLINE` action tag is present.
+When applied to file upload or desriptive fields, a button will be added next to the file name that will trigger a full screen view of the image/PDF. This effect does not depend on whether the `@INLINE` action tag is present.
 
 When applied to any field that includes piping of a file upload field with the `:inline` or `:link` modifiers and the file is one of the supported types, a button will be added next to the link or above the inline view that will trigger a full screen view of the image/PDF.
 
@@ -47,5 +47,6 @@ Supported file types are:
 
 Version | Comment
 ------- | -------------
+1.0.2   | Enhancement: Supports descriptive fields with images/PDF attachments (must be shown as link).
 1.0.1   | Bugfix: Viewing a file upload field would not work when the @INLINE action tag was not also present.
 1.0.0   | Initial release.

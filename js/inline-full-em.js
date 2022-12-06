@@ -77,8 +77,12 @@ function setup() {
                     addWrapper($container, true);
                 }
                 else {
-                    addViewer($container, target);
+                    addViewer($container, target, 'file');
                 }
+            }
+            else if (this_target.type == 'descriptive') {
+                const $container = $('tr[sq_id="' + target + '"] div.div_attach');
+                addViewer($container, target, 'descriptive');
             }
         }
         catch (err) {
@@ -129,14 +133,15 @@ function setupPiped(source = '') {
  * 
  * @param {JQuery<HTMLElement>} $container 
  * @param {string} fuField
+ * @param {string} type
  */
-function addViewer($container, fuField = '') {
+function addViewer($container, fuField = '', type = 'file') {
     const href = $container.find('a').attr('href')?.replace('file_download.php', 'image_view.php');
-    const fileName = (fuField == '' ? $container.find('a').text() ?? '' : $container.find('.fu-fn').text() ?? '').toString();
+    const fileName = ((fuField == '' || type == 'descriptive') ? $container.find('a').text() ?? '' : $container.find('.fu-fn').text() ?? '').toString();
     const fileExt = (fileName.split('.').pop() ?? '').toLowerCase();
     const $viewer = $('<div class="inline-full-wrapper inline-full-viewer"></div>');
     const $controls = $('<div class="inline-full-controls"></div>');
-    const $btnGoMax = $('<button data-rc-attrs="title=global_168" title="' + window['lang'].global_168 + '" class="btn btn-light btn-xs inline ml-2" data-inline-full-action="go-max"><i class="far fa-eye"></i></button>');
+    const $btnGoMax = $('<button data-rc-attrs="title=global_168" title="' + window['lang'].global_168 + '" class="btn btn-light btn-xs inline' + (type == 'file' ? ' ml-2' : '') + '" data-inline-full-action="go-max"><i class="far fa-eye"></i></button>');
     $btnGoMax.on('click', function(e) {
         e.preventDefault();
         $viewer.addClass('inline-full-fullscreen');
@@ -159,10 +164,14 @@ function addViewer($container, fuField = '') {
     if (fuField == '') {
         $wrapper.addClass('left');
     }
-    $container.find(fuField == '' ? 'a' : 'a.filedownloadlink').wrap($wrapper);
-    $container.find('.inline-full-linkwrapper').append($btnGoMax);
+    if (type == 'file') {
+        $container.find(fuField == '' ? 'a' : 'a.filedownloadlink').wrap($wrapper);
+        $container.find('.inline-full-linkwrapper').append($btnGoMax);
+    }
+    else {
+        $container.append($btnGoMax);
+    }
     $viewer.append($controls);
-
     if (fileExt == 'pdf') {
         $viewer.append($('<object data="' + href + '" type="application/pdf" class="inline-full-pdf"></object>'));
     }

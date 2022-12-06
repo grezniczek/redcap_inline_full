@@ -159,6 +159,12 @@ function addViewer($container, fuField = '', type = 'file') {
         $viewer.css('background-color', 'transparent');
         $('body').removeClass('inline-full-body');
     });
+    if (config.isSurvey) {
+        $controls.append('<span class="inline-powered-by">Powered by <b>REDCap</b></span>');
+    }
+    else {
+        $controls.append($('#project-menu-logo img').clone().css('height','2.3em'));
+    }
     $controls.append($btnEndMax);
     const $wrapper = $('<div class="inline-full-linkwrapper"></div>');
     if (fuField == '') {

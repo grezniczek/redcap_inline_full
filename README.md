@@ -47,6 +47,7 @@ Supported file types are:
 
 Version | Comment
 ------- | -------------
+1.0.x   | Show REDCap logo (or Powered by REDCap) in left to corner in full view modes.
 1.0.2   | Enhancement: Supports descriptive fields with images/PDF attachments (must be shown as link).
 1.0.1   | Bugfix: Viewing a file upload field would not work when the @INLINE action tag was not also present.
 1.0.0   | Initial release.

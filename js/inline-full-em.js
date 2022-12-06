@@ -243,6 +243,12 @@ function addWrapper($container, goMaxAfterLink) {
     else {
         $controls.append($btnGoMax);
     }
+    if (config.isSurvey) {
+        $controls.append('<span class="inline-powered-by">Powered by <b>REDCap</b></span>');
+    }
+    else {
+        $controls.append($('#project-menu-logo img').clone().css('height','2.3em').addClass('inline-rc-logo'));
+    }
     $controls.append($btnEndMax);
     $viewer.wrap($wrapper);
     $wrapper = $container.find('.inline-full-wrapper');

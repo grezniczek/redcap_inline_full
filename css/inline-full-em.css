@@ -1,6 +1,15 @@
 /* Inline Full EM */
 
+.inline-rc-logo {
+    display: var(--logo-display);
+}
+
+.inline-full-wrapper {
+    --logo-display: none;
+}
+
 .inline-full-fullscreen {
+    --logo-display: block;
     position: fixed;
     top: 0;
     left: 0;
@@ -11,6 +20,7 @@
     z-index: 1031;
 }
 .inline-powered-by {
+    display: var(--logo-display);
     color: white;
     font-weight: normal;
     padding: 0 1em;
